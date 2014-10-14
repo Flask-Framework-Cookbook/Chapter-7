@@ -1,9 +1,14 @@
 from functools import wraps
 from flask import request, Blueprint, render_template, jsonify, flash, \
     redirect, url_for
-from my_app import db, app
+from my_app import db, app, manager
 from my_app.catalog.models import Product, Category
 from sqlalchemy.orm.util import join
+
+
+manager.create_api(Product, methods=['GET', 'POST', 'DELETE'])
+manager.create_api(Category, methods=['GET', 'POST', 'DELETE'])
+
 
 catalog = Blueprint('catalog', __name__)
 
