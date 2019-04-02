@@ -9,7 +9,7 @@ class Product(db.Model):
         'Category', backref=db.backref('products', lazy='dynamic')
     )
 
-    def __init__(self, name, price, category):
+    def __init__(self, name, price, category=None):
         self.name = name
         self.price = price
         self.category = category
