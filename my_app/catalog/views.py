@@ -1,9 +1,12 @@
 from functools import wraps
 from flask import request, Blueprint, render_template, jsonify, flash, \
     redirect, url_for
-from my_app import db, app
-from my_app.catalog.models import Product, Category
+from flask_restful import Resource
 from sqlalchemy.orm.util import join
+
+from my_app import db, app, api
+from my_app.catalog.models import Product, Category
+
 
 catalog = Blueprint('catalog', __name__)
 
@@ -111,3 +114,29 @@ def category(id):
 def categories():
     categories = Category.query.all()
     return render_template('categories.html', categories=categories)
+
+
+class ProductApi(Resource):
+
+    def get(self, id=None):
+        # Return product data
+        return 'This is a GET response'
+
+    def post(self):
+        # Create a new product
+        return 'This is a POST response'
+
+    def put(self, id):
+        # Update the product with given id
+        return 'This is a PUT response'
+
+    def delete(self, id):
+        # Delete the product with given id
+        return 'This is a DELETE response'
+
+
+api.add_resource(
+    ProductApi,
+    '/api/product',
+    '/api/product/<int:id>'
+)
