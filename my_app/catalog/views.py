@@ -58,7 +58,7 @@ def product(id):
 @catalog.route('/products')
 @catalog.route('/products/<int:page>')
 def products(page=1):
-    products = Product.query.paginate(page, 10)
+    products = Product.query.paginate(page=page, per_page=10)
     return render_template('products.html', products=products)
 
 
@@ -98,7 +98,7 @@ def product_search(page=1):
             Category.name.like('%' + category + '%')
         )
     return render_template(
-        'products.html', products=products.paginate(page, 10)
+        'products.html', products=products.paginate(page=page, per_page=10)
     )
 
 
@@ -127,7 +127,7 @@ class ProductApi(Resource):
 
     def get(self, id=None, page=1):
         if not id:
-            products = Product.query.paginate(page, 10).items
+            products = Product.query.paginate(page=page, per_page=10).items
         else:
             products = [Product.query.get(id)]
         if not products:
